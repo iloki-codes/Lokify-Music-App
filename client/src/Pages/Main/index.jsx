@@ -1,12 +1,22 @@
 import {Link} from "react-router-dom";
-import Button from "../../components/Button";
+import Button from "../../Components/Button";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import CopyrightIcon from "@mui/icons-material/Copyright";
-import logo from "../../assets/white_logo.svg";
+
+import yyhs from "../../assets/yyhs.jfif";
+import raftaar from "../../assets/raftaar.jfif";
+import badshah from "../../assets/badshah.jfif";
+import ikka from "../../assets/ikka.jfif";
+import lilgolu from "../../assets/lilgolu.jfif";
+import bohemia from "../../assets/bohemia.jfif";
+import sidhu from "../../assets/sidhu.jfif";
+import logo from "../../assets/loki.png";
+
 import styles from "./styles.module.scss";
-import { ClassNames } from "@emotion/react";
+
+// import { ClassNames } from "@emotion/react";
 
 const navLinks = [
     {
@@ -60,7 +70,7 @@ const Main = () => {
             <nav className={styles.navbar_container}>
                 
                 <Link to="/" className={styles.nav_logo}>
-                    <img src={logo} alt="logo" />    
+                    <img src={logo} alt="logo" /><span>LOKIFY</span> 
                 </Link>
 
                 <div className={styles.nav_links}>
@@ -78,15 +88,52 @@ const Main = () => {
                 <div className={styles.main}>
 
                     <h1>Listening is everything</h1>
-                    <p>Millions of songs and podcatst. No credit card needed.</p>
+                    <p>Millions of songs and podcatss. No credit card needed.</p>
 
                     <Link to="/signup">
                         <Button
-                            label="GET SPOTIFY FREE"
-                            style={{ color: "#2941ab", width: "18rem", fontSize: "1.4rem" }}
+                            label="GET LOKIFY FOR FREE"
+                            style={{ color: "#2941ab", width: "18rem", fontSize: "1.4rem", height: "100px" }}
                         />
                     </Link>
 
+                    <div className={styles.singers}>
+                        <a href="">
+                            <img src={yyhs} alt="yyhs" />
+                            <button className={styles.b_one}>Play</button>
+                            <span>Radio<br/>Yo Yo Honey <br/>Singh</span>
+                        </a>
+                        <a href="">
+                            <img src={raftaar} alt="raftaar" />
+                            <button className={styles.b_two}>Play</button>
+                            <span>Radio<br/>Raftaar</span>
+                        </a>
+                        <a href="">
+                            <img src={badshah} alt="badshah" />
+                            <button className={styles.b_three}>Play</button>
+                            <span>Radio<br/>Badshah</span>
+                        </a>
+                        <a href="">
+                            <img src={ikka} alt="ikka" />
+                            <button className={styles.b_four}>Play</button>
+                            <span>Radio<br/>Ikka</span>
+                        </a>
+                        <a href="">
+                            <img src={lilgolu} alt="lilgolu" />
+                            <button className={styles.b_five}>Play</button>
+                            <span>Radio<br/>Lil Golu</span>
+                        </a>
+                        <a href="">
+                            <img src={bohemia} alt="bohemia" />
+                            <button className={styles.b_six}>Play</button>
+                            <span>Radio<br/>Bohemia</span>
+                        </a>
+                        <a href="">
+                            <img src={sidhu} alt="sidhu" />
+                            <button className={styles.b_seven}>Play</button>
+                            <span>Radio<br/>Sidhu Moosewala</span>
+                        </a>
+                    </div>
                 </div>
             
             </main>
@@ -148,7 +195,7 @@ const Main = () => {
 
                     <div className={styles.copyright}>
                         <CopyrightIcon />
-                        <span>2024 Spotify</span>
+                        <span>2024 Lokify</span>
                     </div>
                 
                 </div>

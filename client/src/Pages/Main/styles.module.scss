@@ -2,7 +2,7 @@
 	overflow-x: hidden;
 
 	.navbar_container {
-		width: calc(100vw - 20rem);
+		width: 100vw;
 		height: 8rem;
 		background-color: var(--black);
 		display: flex;
@@ -11,20 +11,35 @@
 		padding: 0 10rem;
 
 		.nav_logo {
+			display: flex;
+			justify-content: left;
 			img {
-				width: 14rem;
+				margin: 10px;
+				width: 6rem;
+				height: 8rem;
+			}
+			span{
+				font-family: cursive;
+				color: var(--primary);
+				// add white gradient
+				font-size: 25px;
+				margin-top: 50px;
+				font-weight: 700;
+				text-decoration: underline;
+				word-spacing: 5px;
 			}
 		}
 
 		.nav_links {
 			display: flex;
 			color: white;
+			margin: 0px;
 
 			.links {
 				text-decoration: none;
 				font-weight: 700;
-				font-size: 1.6rem;
-				padding: 0 1.8rem;
+				font-size: 25px;
+				padding: 0 1.5rem;
 				cursor: pointer;
 				color: var(--white);
 
@@ -46,7 +61,7 @@
 		justify-content: center;
 		position: relative;
 		background-image: url(https://www-growth.scdn.co/static/home/bursts.svg);
-		background-size: 175%;
+		background-size: 100%;
 		background-position: 46% 4%;
 		-webkit-box-pack: center;
 
@@ -58,30 +73,87 @@
 			margin: 15rem 0;
 
 			h1 {
+				position: relative;
+				top: -10rem;	
 				text-align: center;
 				font-size: 10rem;
-				color: var(--primary);
-				font-weight: 900;
+				color: var(--black);
+				font-weight: 800;
 				margin: 0;
-				padding-bottom: 2.4rem;
-				@media (min-width: 1200px) {
-					text-indent: -3.3em;
-					font-size: 15rem;
-					width: 80rem;
-					transform: translate(125px, 0px);
-				}
+				transform: translate(125px, 0px);
 			}
 
 			p {
+				position: relative;
+				top: -5rem;
 				font-size: 1.8rem;
 				font-weight: 400;
-				color: var(--primary);
+				color: var(--white);
 				padding-bottom: 3rem;
 			}
+
+			Button {
+				position: relative;
+				top: -2rem;
+			}
+
+			.singers{
+				display: flex;
+				flex-direction: row;
+				justify-content: left;
+				margin-top: 10rem;
+				
+				a {
+					display: flex;
+					justify-content: center;
+					flex-direction: column;
+
+					img{
+						width: 150px;
+						height: 200px;
+						margin-left: 20px;
+						border: 5px;
+						border-color: var(--primary);
+						border-radius: 50px;
+					}
+					
+					span{
+						color: var(--black);
+						font-weight: 700;
+						font-size: 20px;
+						position: relative;
+						left: 50px;
+						top: -30px;
+	
+					}
+					
+					.b_one, .b_two, .b_three, .b_four, .b_five, .b_six, .b_seven{
+							position: relative;
+							top: -30px;
+							left: 130px;
+							position: relative;
+							bottom: 0px;
+							background-color: var(--primary);
+							color: var(--white);
+							border: 2px;
+							border-style:solid;
+							border-color: var(--black);
+							border-radius: 50px;
+							height: 35px;
+							width: 45px;
+							font-size: 18px;
+						}
+						
+					}
+				}
+
+			}
+
 		}
 	}
+
 	.footer_container {
-		width: calc(100vw - 20rem);
+		width: 100vw;
 		padding: 5rem 10rem;
 		background-color: var(--black);
 
@@ -89,10 +161,11 @@
 			display: flex;
 			justify-content: space-between;
 			margin-bottom: 8rem;
+			margin-right: 5rem;
 
 			.footer_logo {
 				img {
-					width: 14rem;
+					width: 10rem;
 				}
 			}
 
@@ -106,6 +179,7 @@
 					font-weight: 900;
 					line-height: 4rem;
 					color: var(--light-white);
+					padding-right: 3rem;
 				}
 
 				.links {
@@ -182,4 +256,3 @@
 			}
 		}
 	}
-}

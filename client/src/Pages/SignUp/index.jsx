@@ -1,6 +1,9 @@
 import { useState } from "react";
 import Joi from "joi";
-import { Link} from "react-router-dom";
+
+import axios from "axios";
+import {toast} from "react-toastify";
+import {Link, useNavigate} from "react-router-dom";
 import passwordComplexity from "joi-password-complexity";
 
 import TextField from "../../Components/Inputs/TextField";
@@ -11,7 +14,6 @@ import Button from "../../Components/Button";
 
 import logo from "../../assets/black_logo.svg";
 import styles from "./styles.module.scss";
-import { convertLength } from "@mui/material/styles/cssUtils";
 
 const months = [
     {name: "January", value: "01" },
@@ -43,11 +45,19 @@ const SignUp = () => {
 
     const [errors, setErrors] = useState({});
 
+    const [isFetching, setIsFetching] = useState(false);
+
+    const navigate = useNavigate();
+
     const handleInputState = (name, value) => {
-        value === ""
-            ? delete error[name]
-            : setErrors(() => ({ ...errors, [name]: value}));
-    };
+		setData((data) => ({ ...data, [name]: value }));
+	};
+
+    const handleErrorState = (name, value) => {
+		value === ""
+			? delete errors[name]
+			: setErrors(() => ({ ...errors, [name]: value }));
+	};
 
     const schema = {
         email: Joi.string().email({ tlds: false }).required().label("Email"),
@@ -59,6 +69,26 @@ const SignUp = () => {
         e.preventDefault();
         if (Object.keys(errors).length === 0) {
             console.log(data);
+            try {
+				setIsFetching(true);
+				const url = process.env.API_URL + "/users";
+				await axios.post(url, data);
+				setIsFetching(false);
+				toast.success("Account created successfully");
+				history.push("/login");
+			} catch (error) {
+				setIsFetching(false);
+				if (
+					error.response &&
+					error.response.status >= 400 &&
+					error.response.status < 500
+				) {
+					toast.error(error.response.data);
+				} else {
+					console.log(error);
+					toast.error("Something went wrong!");
+				}
+			}
         } else {
             console.log("Please fill out the details properly !")
         }

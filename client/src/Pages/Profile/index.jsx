@@ -1,4 +1,8 @@
-import {useState} from "react";
+import {useState, useEffect} from "react";
+import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { updateUser } from "../../redux/userSlice/apiCalls.js";
+
 import Joi from "joi";
 import TextField from "../../Components/Inputs/TextField";
 import Select from "../../Components/Inputs/Select";
@@ -36,6 +40,9 @@ const Profile = () => {
 	});
 	
     const [errors, setErrors] = useState({});
+	const { user, updateUserProgress } = useSelector((state) => state.user);
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
 
 	const handleInputState = (name, value) => {
 		setData((data) => ({ ...data, [name]: value }));
@@ -51,25 +58,41 @@ const Profile = () => {
 		name: Joi.string().min(5).max(10).required().label("Name"),
 	};
 
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
 		console.log(data);
+		const payload = { data, id: user._id };
+		const res = await updateUser(payload, dispatch);
+		res && navigate.push("/home");
 	};
+
+	useEffect(() => {
+		if (user) {
+			const dk = {
+				name: user.name,
+				month: user.month,
+				year: user.year,
+				date: user.date,
+				gender: user.gender,
+			};
+			setData(dk);
+		}
+	}, [user]);
+
 
 	return (
 
 		<div className={styles.container}>
-		
-        	<h1>Profile</h1>
+			<h1>Profile</h1>
 			<form onSubmit={handleSubmit} className={styles.form_container}>
 				<div className={styles.input_container}>
 					<TextField
 						label="What's your email?"
 						placeholder="Enter your email"
-						name="email"
-						handleInputState={handleInputState}
-						value={data.email}
+						value={user ? user.email : ""}
 						required={true}
+						disabled={true}
+						style={{ color: "white" }}
 					/>
 				</div>
 				<div className={styles.input_container}>
@@ -93,7 +116,7 @@ const Profile = () => {
 								name="month"
 								handleInputState={handleInputState}
 								label="Month"
-								placeholder="MM"
+								placeholder="Months"
 								options={months}
 								value={data.month}
 								required={true}
@@ -132,11 +155,14 @@ const Profile = () => {
 					/>
 				</div>
 				<div className={styles.submit_btn_wrapper}>
-					<Button label="Update" type="submit" />
+					<Button
+						label="Update"
+						type="submit"
+						isFetching={updateUserProgress}
+					/>
 				</div>
 			</form>
-		
-        </div>
+		</div>
 	
     );
 
