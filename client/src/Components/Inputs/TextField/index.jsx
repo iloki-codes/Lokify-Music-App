@@ -7,12 +7,12 @@ const TextField = ({
     error,
     handleInputState,
     handleErrorState,
-    scgema,
+    schema,
     ...rest
 }) => {
     const validateProperty = ({ name, value}) => {
         const obj = { [name]: value};
-        const InputSchema = Joi.object({ [name]: schema});
+        const inputSchema = Joi.object({ [name]: schema});
         const { error } = inputSchema.validate(obj);
         return error ? error.details[0].message: "";
     };

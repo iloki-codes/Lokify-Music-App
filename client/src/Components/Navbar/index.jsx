@@ -1,10 +1,15 @@
 import {useState} from "react";
-import {useHistory, Link} from "react-router-dom";
+
+import {useDispatch, useSelector} from "react-redux";
+import { logout } from "../../redux/authSlice";
+import { setCurrentSong } from "../../redux/audioPlayer";
+
+import {Link, useNavigation} from "react-router-dom";
 import {ClickAwayListener} from "@mui/material";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
-import ArrowBacklosRoundedIcon from "@mui/icons-material/ArrowBacklosRounded";
-import ArrowForwardlosRoundedIcon from "@mui/icons-material/ArrowForwadlosRounded";
+import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";
+import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import PersonIcon from "@mui/icons-material/Person";
 import SettingsIcon from "@mui/icons-material/Settings";
@@ -13,16 +18,27 @@ import styles from "./styles.module.scss";
 
 const Navbar = () => {
     const [menu, setMenu] = useState(false);
-    const history = useHistory();
+    const {user} = useSelector((state) => state.user);
+    const dispatch = useDispatch();
+    const navigate = useNavigation();
+
+    const handleLogout = () => {
+        dispatch(logout());
+        dispatch(setCurrentSong(null));
+        window.location = "/login";
+    };
+
 
     return (
+        
         <div className={styles.container}>
+            
             <div className={styles.left}>
-                <div className={styles.icon} onClick={() => history.goBack()}>
-                    <ArrowBacklosRoundedIcon />
+                <div className={styles.icon} onClick={() => navigate.goBack()}>
+                    <ArrowBackIosRoundedIcon />
                 </div>
-                <div className={styles.icon} onClick={() => history.goForward()}>
-                    <ArrowForwardlosRoundedIcon />
+                <div className={styles.icon} onClick={() => navigate.goForward()}>
+                    <ArrowForwardIosRoundedIcon />
                 </div>
             </div>
 
@@ -30,10 +46,11 @@ const Navbar = () => {
                 <div 
                     style= {{backgroundColor: `${menu ? "#282828" : "#00000"}`}}
                     className={styles.profile_menu}
-                    onClick={() => setMenu(!menu)}>
+                    onClick={() => setMenu(!menu)}
+                >
                       
                         <AccountCircleIcon />
-                        <p>Lokify</p>
+                        <p>{user && user.name}</p>
                         {menu ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
                 
                 </div>
@@ -52,14 +69,16 @@ const Navbar = () => {
                             <p>Settings</p>
                             <SettingsIcon />
                         </div>
-                        <div className={styles.options}>
+                        <div className={styles.options} onClick={handleLogout}>
                             <p>Logout</p>
                             <LogoutIcon />
                         </div>    
                     </div>  
                 </ClickAwayListener>
             )}
+        
         </div>
+    
     );
 };
 

@@ -17,9 +17,24 @@
 		height: 10rem;
 	}
 
+	.logo{
+		display: flex;
+		flex-direction: row;	
+	}
+
 	.logo_img {
-		width: 15rem;
+		width: 8rem;
+		height: 10rem;
 		margin: 2.5rem;
+	}
+
+	.logo_text{
+		color: var(--primary);
+		font-size: 35px;
+		font-family: cursive;
+		font-weight: bold;
+		margin-top: 5rem;
+		margin-left: -2rem;
 	}
 
 	.menu_link {

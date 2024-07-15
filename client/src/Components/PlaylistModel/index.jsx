@@ -2,6 +2,9 @@ import { useState, useEffect } from "react";
 import TextField from "../Inputs/TextField";
 import FileInput from "../Inputs/FileInput";
 import Button from "../Button";
+
+import axiosGet from "../../redux/axiosGet.js";
+import { toast } from "react-toastify";
 import { IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import defaultImg from "../../assets/music.png";
@@ -15,6 +18,8 @@ const PlaylistModel = ({closeModel, playlist}) => {
         img: ""
     });
 
+    const [isFetching, setIsFetching] = useState(false);
+
     useEffect(() => {
         setData({name: playlist.name, desc: playlist.desc, img: playlist.img});
     }, [playlist]);
@@ -23,12 +28,26 @@ const PlaylistModel = ({closeModel, playlist}) => {
         setData((prev) => ({...prev, [name]: value}));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         console.log(data);
+
+        try {
+			setIsFetching(true);
+			const url =
+				process.env.API_URL + `/playlists/edit/${playlist._id}`;
+			const { data: res } = await axiosInstance.put(url, data);
+			toast.success(res.message);
+			setIsFetching(false);
+			window.location.reload();
+		} catch (error) {
+			setIsFetching(false);
+			console.log(error);
+		}
     };
 
     return (
+
         <div className={styles.model_container}>
             
             <IconButton className={styles.close_btn} onClick={closeModel}>
@@ -57,7 +76,7 @@ const PlaylistModel = ({closeModel, playlist}) => {
                 </div>
 
                 <div className={styles.input_container}>
-                    <TextField
+                    <FileInput
                         type="image"
                         label="Choose Image"
                         name="img"
@@ -72,7 +91,9 @@ const PlaylistModel = ({closeModel, playlist}) => {
                     style={{ position: "absolute", bottom: "0", right: "0", margin: "1rem"}}
                 />
             </div>
+        
         </div>
+    
     );
 };
 
